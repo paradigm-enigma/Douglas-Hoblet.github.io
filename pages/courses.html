@@ -1,0 +1,33 @@
+---
+layout: default
+title: Courses
+permalink: /courses/
+---
+<section>
+  <h1>MIT Courses</h1>
+  <p class="lede">
+    Classes I've taken at MIT, with links to notes and problem-set writeups where I have them.
+    MIT course numbers follow the <a href="https://registrar.mit.edu/registration-academics/academic-requirements/degree-requirements/course-numbers">department code system</a>
+    (e.g. <code>6.006</code> is Course VI, an intro algorithms class).
+  </p>
+
+  {% assign courses_by_term = site.courses | group_by: "term" %}
+  {% for term in courses_by_term %}
+    <div class="course-group">
+      <h2>{{ term.name | default: "Untermed" }}</h2>
+      <ul class="course-list">
+        {% for c in term.items %}
+          <li>
+            <a href="{{ c.url | relative_url }}"><strong>{{ c.number }}</strong> — {{ c.title }}</a>
+            {% if c.instructor %}<small class="muted">· {{ c.instructor }}</small>{% endif %}
+            {% if c.units %}<small class="muted">· {{ c.units }} units</small>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+
+  {% if site.courses.size == 0 %}
+    <p class="muted">No courses logged yet. Add a Markdown file under <code>_courses/</code> (e.g. <code>6-006.md</code>).</p>
+  {% endif %}
+</section>

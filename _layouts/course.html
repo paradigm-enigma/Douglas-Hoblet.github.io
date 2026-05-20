@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<article class="course">
+  <header class="course-header">
+    <p class="breadcrumb"><a href="{{ '/courses/' | relative_url }}">← Courses</a></p>
+    <h1>{{ page.number }} — {{ page.title }}</h1>
+    <p class="course-meta">
+      {% if page.term %}<span>{{ page.term }}</span>{% endif %}
+      {% if page.instructor %} · taught by {{ page.instructor }}{% endif %}
+      {% if page.units %} · {{ page.units }} units{% endif %}
+    </p>
+    {% if page.ocw %}<p><a href="{{ page.ocw }}">OCW materials →</a></p>{% endif %}
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  {% assign course_notes = site.notes | where: "course", page.number %}
+  {% if course_notes.size > 0 %}
+    <section class="course-notes">
+      <h2>Notes from this class</h2>
+      <ul class="note-list">
+        {% for n in course_notes %}
+          <li><a href="{{ n.url | relative_url }}">{{ n.title }}</a>
+              {% if n.status %}<small class="muted">· {{ n.status }}</small>{% endif %}</li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</article>

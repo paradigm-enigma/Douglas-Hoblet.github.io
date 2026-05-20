@@ -1,0 +1,70 @@
+---
+layout: default
+title: Digital Garden
+permalink: /garden/
+is_garden: true
+---
+<section>
+  <h1>Digital Garden 🌱</h1>
+  <p class="lede">
+    A collection of evergreen notes — ideas at various stages of growth.
+    Seedlings 🌱 are rough sketches, budding 🌿 are actively tended,
+    evergreens 🌳 are mostly stable. Everything is a work in progress.
+  </p>
+
+  {% assign evergreens = site.notes | where: "status", "evergreen" | sort: "updated" | reverse %}
+  {% if evergreens.size > 0 %}
+    <h2>🌳 Evergreen</h2>
+    <ul class="note-list">
+      {% for note in evergreens %}
+        <li>
+          <a href="{{ note.url | relative_url }}">{{ note.title }}</a>
+          {% if note.course %}<small class="muted">· {{ note.course }}</small>{% endif %}
+          {% if note.updated %}<small class="muted">· {{ note.updated | date: "%b %Y" }}</small>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% assign buddings = site.notes | where: "status", "budding" | sort: "updated" | reverse %}
+  {% if buddings.size > 0 %}
+    <h2>🌿 Budding</h2>
+    <ul class="note-list">
+      {% for note in buddings %}
+        <li>
+          <a href="{{ note.url | relative_url }}">{{ note.title }}</a>
+          {% if note.course %}<small class="muted">· {{ note.course }}</small>{% endif %}
+          {% if note.updated %}<small class="muted">· {{ note.updated | date: "%b %Y" }}</small>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% assign seedlings = site.notes | where: "status", "seedling" | sort: "updated" | reverse %}
+  {% if seedlings.size > 0 %}
+    <h2>🌱 Seedling</h2>
+    <ul class="note-list">
+      {% for note in seedlings %}
+        <li>
+          <a href="{{ note.url | relative_url }}">{{ note.title }}</a>
+          {% if note.course %}<small class="muted">· {{ note.course }}</small>{% endif %}
+          {% if note.updated %}<small class="muted">· {{ note.updated | date: "%b %Y" }}</small>{% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% assign unsorted = site.notes | where_exp: "n", "n.status == nil" %}
+  {% if unsorted.size > 0 %}
+    <h2>🌱 Unsorted seedlings</h2>
+    <ul class="note-list">
+      {% for note in unsorted %}
+        <li><a href="{{ note.url | relative_url }}">{{ note.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if site.notes.size == 0 %}
+    <p class="muted">The garden is empty. Add a Markdown file under <code>_notes/</code> to plant your first seedling.</p>
+  {% endif %}
+</section>

@@ -1,0 +1,30 @@
+---
+layout: default
+title: Blog
+permalink: /blog/
+is_blog: true
+---
+<section>
+  <h1>Blog</h1>
+  <p class="lede">Longer-form posts — essays, project writeups, and the occasional rant.</p>
+
+  {% assign posts_by_year = site.posts | group_by_exp: "post", "post.date | date: '%Y'" %}
+  {% for year in posts_by_year %}
+    <h2>{{ year.name }}</h2>
+    <ul class="post-list">
+      {% for post in year.items %}
+        <li>
+          <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d" }}</time>
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          {% if post.tags and post.tags.size > 0 %}
+            <span class="tags muted">· {% for tag in post.tags %}#{{ tag }} {% endfor %}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+
+  {% if site.posts.size == 0 %}
+    <p class="muted">No posts yet. Drop a Markdown file into <code>_posts/</code> to start.</p>
+  {% endif %}
+</section>

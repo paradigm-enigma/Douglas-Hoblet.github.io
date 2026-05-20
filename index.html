@@ -1,0 +1,55 @@
+---
+layout: default
+title: Home
+---
+<section class="blurb">
+  <h1>Hi, I'm {{ site.author }}</h1>
+  <p class="lede">{{ site.tagline }}</p>
+
+  <p>
+    I'm a Course <strong>{{ site.mit.major }}</strong> undergrad at MIT, class of <strong>{{ site.mit.class_year }}</strong>.
+    This site is my public notebook — a home for writing, course notes, and side projects.
+    Everything here is a draft of something; nothing is final.
+  </p>
+
+  <ul class="quick-links">
+    <li><a href="{{ '/blog/' | relative_url }}">🪶 Blog</a><small>Essays and longer posts</small></li>
+    <li><a href="{{ '/garden/' | relative_url }}">🌱 Digital Garden</a><small>Evergreen notes in progress</small></li>
+    <li><a href="{{ '/courses/' | relative_url }}">📚 Courses</a><small>Notes from MIT classes</small></li>
+    <li><a href="{{ '/projects/' | relative_url }}">🛠️ Projects</a><small>Code, UROP, hackathons</small></li>
+    <li><a href="{{ '/about/' | relative_url }}">👋 About</a><small>Who I am, how to reach me</small></li>
+  </ul>
+
+  <h2>Recent posts</h2>
+  <ul class="post-list">
+    {% for post in site.posts limit: 4 %}
+      <li>
+        <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>Recently tended in the garden</h2>
+  <ul class="note-list">
+    {% assign recent_notes = site.notes | sort: "updated" | reverse %}
+    {% for note in recent_notes limit: 5 %}
+      <li>
+        <a href="{{ note.url | relative_url }}">{{ note.title }}</a>
+        <small class="muted">· {{ note.status | default: "seedling" }}{% if note.course %} · {{ note.course }}{% endif %}</small>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <h2>Projects</h2>
+  <ul class="project-grid">
+    {% for p in site.projects limit: 3 %}
+      <li>
+        <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+        <p class="year">{{ p.year }}{% if p.course %} · {{ p.course }}{% endif %}</p>
+        <p>{{ p.summary }}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  <p><a href="{{ '/projects/' | relative_url }}">See all projects →</a></p>
+</section>
