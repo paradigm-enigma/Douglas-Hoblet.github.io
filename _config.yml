@@ -1,0 +1,88 @@
+# ============================================================
+#  Site settings — edit these to make the template yours
+# ============================================================
+title: "Tim Beaver — MIT"
+tagline: "MIT undergrad. Notes, projects, and occasional essays."
+description: "Personal site, blog, and digital garden of an MIT student."
+author: "Tim Beaver"
+email: "tim@mit.edu"
+url: "https://YOUR-GITHUB-USERNAME.github.io"    # no trailing slash
+baseurl: ""                                      # "" for user site, "/repo-name" for project site
+
+# MIT-specific fields (optional; shown in About page)
+mit:
+  class_year: 2027
+  major: "6-3 (Computer Science)"
+  dorm: "Next House"
+  living_group: ""
+  activities:
+    - "MIT UROP — CSAIL"
+    - "HackMIT organizer"
+    - "Course VI LEMELSON"
+
+# Social links — leave blank to hide
+social:
+  github: "your-github-username"
+  linkedin: "your-linkedin"
+  twitter: ""
+  scholar: ""
+  email: "tim@mit.edu"
+
+# Navigation (top of every page)
+nav:
+  - { title: "Home",          url: "/" }
+  - { title: "About",         url: "/about/" }
+  - { title: "Blog",          url: "/blog/" }
+  - { title: "Digital Garden",url: "/garden/" }
+  - { title: "Courses",       url: "/courses/" }
+  - { title: "Projects",      url: "/projects/" }
+
+# ============================================================
+#  Jekyll build settings — usually no need to change
+# ============================================================
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge
+highlighter: rouge
+
+permalink: /:title/
+
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+collections:
+  notes:
+    output: true
+    permalink: /garden/:path/
+  projects:
+    output: true
+    permalink: /projects/:path/
+  courses:
+    output: true
+    permalink: /courses/:path/
+
+defaults:
+  - scope: { path: "", type: "posts" }
+    values: { layout: "post" }
+  - scope: { path: "", type: "notes" }
+    values: { layout: "note" }
+  - scope: { path: "", type: "projects" }
+    values: { layout: "project" }
+  - scope: { path: "", type: "courses" }
+    values: { layout: "course" }
+
+exclude:
+  - README.md
+  - CUSTOMIZING.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - node_modules
+  - docs
+
+# Inspiration / credit
+theme_credit: "Structure inspired by strikingloo.github.io"

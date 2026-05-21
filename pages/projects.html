@@ -1,0 +1,32 @@
+---
+layout: default
+title: Projects
+permalink: /projects/
+---
+<section>
+  <h1>Projects</h1>
+  <p class="lede">Problem-set extensions, UROP work, hackathon builds, and personal experiments.</p>
+
+  {% assign by_year = site.projects | sort: "year" | reverse | group_by: "year" %}
+  {% for year in by_year %}
+    <h2>{{ year.name }}</h2>
+    <ul class="project-grid">
+      {% for p in year.items %}
+        <li>
+          <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+          {% if p.course %}<p class="year">for {{ p.course }}</p>{% endif %}
+          <p>{{ p.summary }}</p>
+          <p class="muted">
+            {% if p.stack %}{{ p.stack | join: " · " }}{% endif %}
+            {% if p.repo %} · <a href="{{ p.repo }}">code</a>{% endif %}
+            {% if p.demo %} · <a href="{{ p.demo }}">demo</a>{% endif %}
+          </p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endfor %}
+
+  {% if site.projects.size == 0 %}
+    <p class="muted">No projects listed yet. Add Markdown files under <code>_projects/</code>.</p>
+  {% endif %}
+</section>
